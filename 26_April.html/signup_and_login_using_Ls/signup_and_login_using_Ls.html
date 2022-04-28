@@ -38,12 +38,10 @@
             <label >Email</label>
             <input type="text"  id="mail" placeholder="Enter email">
             <label >Password</label>
-            <input type="text" name="" id="Password" placeholder="Enter Password">
-        </form>
-        <div id="but">
-
-            <button>SIGN UP</button>
-        </div>
+            <input type="text" name="" id="password" placeholder="Enter Password"><br>
+            <input type="submit" name="" id="">
+        </form>   
+          
         <h6>Already have an account? <a href="signin.html">Sign In</a></h6>
     </div>
 </body>
@@ -51,4 +49,34 @@
 
 <script>
     
+    document.querySelector("form").addEventListener("submit", signup);
+    var formdata =JSON.parse(localStorage.getItem("studentform"))|| [];
+
+    function signup(){
+        event.preventDefault();
+        console.log("entered")
+
+        var formdataobject = {
+            name:file.name.value,
+            email:file.mail.value,
+            pass:file.password.value
+        }
+        var a =true;
+        for(var key in formdataobject){
+            if(formdataobject[key]==0){
+                a = false;
+                alert(key+" "+"should be filled");
+                break;
+            }
+        }
+
+        if(a == true){
+            formdata.push(formdataobject);
+            localStorage.setItem("studentform", JSON.stringify(formdata));
+            
+        }
+
+    }
+
+   
 </script>
