@@ -46,8 +46,20 @@
          role : myform.role.value
         }
         data.push(dataobj);
-
-        localStorage.setItem("investordata",JSON.stringify(data));
+        var a = true;
+       for(var key in dataobj){
+        //    console.log(dataobj[key])
+           if(dataobj[key]==0){
+              alert(key+" "+"should not be empty");
+               a = false;
+               break;
+           }
+       }
+    //    console.log(b);
+        if(a ==true){
+            localStorage.setItem("investordata",JSON.stringify(data));
+        }
+       
     }
 
 </script>
