@@ -15,6 +15,7 @@
     document.querySelector("#inc").addEventListener("click",increase);
 
     var count =JSON.parse(localStorage.getItem("counter"))||0; 
+    console.log(count);
 
     document.querySelector("h1").innerText=count;
     function decrease(){
