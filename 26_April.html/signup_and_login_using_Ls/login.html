@@ -32,7 +32,7 @@
             }
         }
         if(a==true){
-            var data = JSON.parse(localStorage.getItem("studentform"))
+            var data = JSON.parse(localStorage.getItem("studentform"))||[]
             data.forEach(function(elem){
                 if(elem.email == obj.mail && elem.pass == obj.pass){
                     b = true;
