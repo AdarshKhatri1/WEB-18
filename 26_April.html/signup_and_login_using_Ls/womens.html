@@ -20,14 +20,65 @@
         #div1>p{
             margin-left: 5px;
         }
-        p+p{
+        #div1>p+p{
             text-decoration: line-through;
             color: red;
+        }
+        #nav{
+            display: flex;
+            /* border: 3px solid greenyellow; */
+            align-items: center;
+            background-color: black;
+            font-weight: bold;
+            color: whitesmoke;
+            border-radius: 20px;
+        }
+        #nav>div:nth-child(1){
+            /* color:  red; */
+            padding: 8px;
+            width: 70%;
+            /* border: 1px solid brown; */
+        }
+        #last{
+            width: 800px;
+            display: flex;
+            justify-content: space-around;
+            /* color: blueviolet; */
+            /* border: 2px solid gold; */
+        }
+        a{
+            color: white;
+
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #cart{
+          display: flex;
+          font-size: 40px;
+          justify-content: end;
+        }
+        #cart>p{
+          margin-left: 15px;
+          background-color: greenyellow;
+
         }
     </style>
 </head>
 <body>
-    <h1>Womens page</h1>
+    <div id="nav">
+        <div>Reebok</div>
+        <div id="last">
+            <p><a href="mens.html">Mens</a></p>
+            <p><a href="womens.html">WOMEN</a></p>
+            <p><a href="login.html">Login</a></p>
+            <p><a href="signup_and_login_using_Ls.html">Signup</a></p>
+            <p style="color: greenyellow;"><a href="cart.html">CART</a>
+              <span id="num">0</span>
+            </p>
+
+            
+        </div>
+    </div>
     <div id="men">
 
     </div>
@@ -35,7 +86,7 @@
 </html>
 
 <script>
- var womensData = [
+var womensData = [
     {
       image_url:
         "https://content.shop4reebok.com/static/Product-GL2296/reebok_GL2296_1.jpg.plp",
@@ -513,10 +564,41 @@
         var btn = document.createElement("button");
         btn.innerText = "Add to Cart"
         btn.style.fontWeight="bold"
+
+        btn.addEventListener("click",function(){
+          cart(elem)
+        });
        div.append(img,h3,div1,btn)
 document.querySelector("#men").append(div);
     })
 
+    var cartarr = JSON.parse(localStorage.getItem("cart"))||[];
+    var count = JSON.parse(localStorage.getItem("number_of_cart_item"))||0;
+    document.querySelector("#num").innerText = count;
 
+function cart(elem){
+  var condition  = true;
+  cartarr.forEach(function(ele){
+    for(var key in ele){
+      if(ele[key] == elem.name){
+        condition= false;
+        break;
+      }
+    }
+  })
+  if(condition == true){
+    cartarr.push(elem);
+    count++;
+  localStorage.setItem("cart",JSON.stringify(cartarr))
+  localStorage.setItem("number_of_cart_item",JSON.stringify(count));
+  document.querySelector("#num").innerText = count;
+  }else{
+    alert("item already added")
+  }
+  
+}
 
 </script>
+
+
+  

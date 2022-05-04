@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+    <style>
+        *{
+            /* background-color: rebeccapurple; */
+            margin: 0px;
+            padding: 0px;
+        }
+        #men{
+            /* border: 1px solid red; */
+            display: grid;
+
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+        }
+        #cont{
+            /* border: 1px solid green; */
+            padding: 10px
+        }
+        #div1{
+            display: flex;
+        }
+        #div1>p{
+            margin-left: 5px;
+        }
+        #div1>p+p{
+            text-decoration: line-through;
+            color: red;
+        }
+        #tophead{
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        #tophead>p{
+            margin-right: 10px;
+            /* background-color: greenyellow; */
+            font-weight: bold;
+            font-size: 30px;
+            color: blue;
+        }
+        #nav{
+            display: flex;
+            /* border: 3px solid greenyellow; */
+            align-items: center;
+            background-color: black;
+            font-weight: bold;
+            color: whitesmoke;
+            border-radius: 20px;
+        }
+        #nav>div:nth-child(1){
+            /* color:  red; */
+            padding: 8px;
+            width: 70%;
+            /* border: 1px solid brown; */
+        }
+        #last{
+            width: 800px;
+            display: flex;
+            justify-content: space-around;
+            /* color: blueviolet; */
+            /* border: 2px solid gold; */
+        }
+        a{
+            color: white;
+
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #cart{
+          display: flex;
+          font-size: 40px;
+          justify-content: end;
+        }
+        #cart>p{
+          margin-left: 15px;
+          
+        }
+        #tophead{
+            background-color: aquamarine;
+           
+        }
+        input{
+            font-size: 20px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <div>Reebok</div>
+        <div id="last">
+            <p><a href="mens.html">Mens</a></p>
+            <p><a href="womens.html">WOMEN</a></p>
+            <p><a href="login.html">Login</a></p>
+            <p><a href="signup_and_login_using_Ls.html">Signup</a></p>
+            <p style="color: greenyellow;"><a href="cart.html">CART</a>
+              <span id="num">0</span>
+            </p>
+
+            
+        </div>
+    </div>
+    <div id="tophead">
+        <p>Total-Price:- <span id="pricee">00</span></p>
+        <p>Total-items:-<span id="items">0</span></p>         
+    </div>
+    <form action="" id="form">
+        <input type="text" name="" id="code" placeholder="Promocode">
+        <input type="submit" name="" id="submit">
+    </form>
+    <div id="men">
+
+    </div>
+</body>
+</html>
+<script>
+    var d = JSON.parse(localStorage.getItem("d"))||true;
+    var count = JSON.parse(localStorage.getItem("number_of_cart_item"))||0;
+    document.querySelector("#num").innerText = count;
+    var data = JSON.parse(localStorage.getItem("cart"))||[];
+    var price= 0;
+    localStorage.setItem("price",JSON.stringify(price));
+displaydata(data);
+function displaydata(data){
+    data.forEach(function(elem,ind){
+        // console.log(elem)
+       var div = document.createElement("div");
+       div.setAttribute("id","cont");
+
+       var img = document.createElement("img");
+       img.setAttribute("src",elem.image_url);
+
+        var h3 = document.createElement("h3");
+        h3.innerText = elem.name
+
+        var div1 = document.createElement("div");
+        div1.setAttribute("id","div1")
+        var p1 = document.createElement("p");
+        p1.innerText = elem.price;
+        var a = elem.price;
+        // if(d == true){
+            price = price+a;
+            localStorage.setItem("d",JSON.stringify("false"));
+        // }
+       
+        // console.log(price )
+        localStorage.setItem("price",price)
+        var p2 = document.createElement("p");
+        p2.innerText = elem.strikedoffprice;
+        div1.append(p1,p2)
+
+        var btn = document.createElement("button");
+        btn.innerText = "Delete"
+        btn.style.fontWeight="bold"
+        btn.style.color="red"
+        btn.style.fontSize="15px";
+
+        btn.addEventListener("click",function(){
+          deleted(elem,ind)
+        });
+       div.append(img,h3,div1,btn)
+document.querySelector("#men").append(div);
+    })
+}
+    
+
+//     var cartarr = JSON.parse(localStorage.getItem("cart"))||[];
+    var count = JSON.parse(localStorage.getItem("number_of_cart_item"))||0;
+    document.querySelector("#num").innerText = count;
+    document.querySelector("#items").innerText = count
+    document.querySelector("#pricee").innerText = price;
+
+function deleted(elem,ind){
+    console.log("entered")
+    event.target.parentNode.remove();
+    count--;
+    price = price-elem.price;
+    document.querySelector("#pricee").innerText = price;
+localStorage.setItem("price",JSON.stringify(price));
+    localStorage.setItem("number_of_cart_item",JSON.stringify(count));
+data.splice(ind,1)
+localStorage.setItem("cart",JSON.stringify(data))
+document.querySelector("#num").innerText = count;
+document.querySelector("#items").innerText = count;  
+window.location.reload;
+}
+
+document.querySelector("form").addEventListener("submit",cutoff);
+function cutoff(){
+    event.preventDefault();
+    var a = form.code.value;
+    var i = JSON.parse(localStorage.getItem("i"))||1;
+    if(i=="over"){
+       alert("you already get discout")
+       form.code.innerText = "";
+   }
+   if(a == "masai30" && i==1){
+       price = price - ((30/100)*price);
+       document.querySelector("#pricee").innerText = price;
+       localStorage.setItem("price",JSON.stringify(price));
+       form.code.innerText="";
+       i--;
+       localStorage.setItem("i",JSON.stringify("over"))
+
+   }
+   
+}
+</script>
